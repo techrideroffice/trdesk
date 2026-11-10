@@ -1,0 +1,47 @@
+# arg 1:  the new package version
+#pre_install() {
+#}
+
+# arg 1:  the new package version
+post_install() {
+	# do something here
+	cp /usr/share/trdesk/files/trdesk.service /etc/systemd/system/trdesk.service
+	cp /usr/share/trdesk/files/trdesk.desktop /usr/share/applications/
+	cp /usr/share/trdesk/files/trdesk-link.desktop /usr/share/applications/
+	systemctl daemon-reload
+	systemctl enable trdesk
+	systemctl start trdesk
+	update-desktop-database
+}
+
+# arg 1:  the new package version
+# arg 2:  the old package version
+pre_upgrade() {
+    systemctl stop trdesk || true
+}
+
+# arg 1:  the new package version
+# arg 2:  the old package version
+post_upgrade() {
+	cp /usr/share/trdesk/files/trdesk.service /etc/systemd/system/trdesk.service
+	cp /usr/share/trdesk/files/trdesk.desktop /usr/share/applications/
+	cp /usr/share/trdesk/files/trdesk-link.desktop /usr/share/applications/
+	systemctl daemon-reload
+	systemctl enable trdesk
+	systemctl start trdesk
+	update-desktop-database
+}
+
+# arg 1:  the old package version
+pre_remove() {
+	systemctl stop trdesk || true
+	systemctl disable trdesk || true
+	rm /etc/systemd/system/trdesk.service || true
+}
+
+# arg 1:  the old package version
+post_remove() {
+	rm /usr/share/applications/trdesk.desktop || true
+	rm /usr/share/applications/trdesk-link.desktop || true
+	update-desktop-database
+}

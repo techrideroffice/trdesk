@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=trdesk
+NoDisplay=true
+MimeType=x-scheme-handler/trdesk;
+TryExec=trdesk
+Exec=trdesk %u
+Icon=trdesk
+Terminal=false
+Type=Application
+StartupNotify=false
+StartupWMClass=trdesk
